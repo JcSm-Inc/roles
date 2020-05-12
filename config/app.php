@@ -175,9 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        //LARAVEL COLLECTIVE INSTALL JOSE
         Collective\Html\HtmlServiceProvider::class,
-        // caffeinated/shinobi seccion de service provider
         Caffeinated\Shinobi\ShinobiServiceProvider::class,
 
     ],
@@ -232,8 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-	//LARAVEL COLLECTIVE INSTALADO POR JOSE -------------
-        'Form' => Collective\Html\FormFacade::class,
+	    'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
     ],
 
