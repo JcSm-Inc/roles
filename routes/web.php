@@ -82,15 +82,15 @@ Route::middleware(['auth'])->group(function(){
         ->middleware('can:users.index');
 
     // actualizar
-    Route::put('users/{role}','UserController@update')->name('users.update')
+    Route::put('users/{user}','UserController@update')->name('users.update')
         ->middleware('can:users.edit');
     //ver el detalle
-    Route::get('users/{role}','UserController@show')->name('users.show')
+    Route::get('users/{user}','UserController@show')->name('users.show')
         ->middleware('can:users.show');
     // eliminar
-    Route::delete('users/{role}','UserController@destroy')->name('users.destroy')
+    Route::delete('users/{user}','UserController@destroy')->name('users.destroy')
         ->middleware('can:users.destroy');
     // ver el formulario de edicion
-    Route::get('users/{role}/edit','UserController@edit')->name('users.edit')
+    Route::get('users/{user}/edit','UserController@edit')->name('users.edit')
         ->middleware('can:users.edit');
 });

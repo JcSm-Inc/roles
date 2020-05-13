@@ -2,83 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use Caffeinated\Shinobi\Models\Role;
+use Caffeinated\Shinobi\Models\Permissions;
+
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $roles=Role::paginate();
+        return view('roles/index',compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+       return view('roles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $role = Role::create($request->all());
+        return redirect()->route('roles.edit',$role->id)
+            ->with('info','Producto guardado con exito');
+    }
+    public function show(Role $role)
+    {
+        //dd($role->id); //para verificar si esta llegando el dato de la vista
+        return view('roles.show',compact('role')); 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Role $role)
     {
-        //
+        $roles=Role::get();
+        return view('roles.edit',compact('role','roles')); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $request, Role $role)
     {
-        //
+        //actualizar usuario
+        $role->update($request->all());
+
+        //Actualizar Roles
+        $role->roles()->sync($request->get('roles'));
+
+        return redirect()->route('roles.edit',$role->id)
+            ->with('info','Usuario actualizado con exito');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Role $role)
     {
-        //
-    }
+        $role->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->with('info','Eliminado correctamente');
     }
 }
