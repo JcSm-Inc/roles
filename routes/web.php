@@ -26,27 +26,7 @@ Route::middleware(['auth'])->group(function(){
     //Roles
 
     // crear
-    Route::post('roles/store','RoleController@store')->name('roles.store')
-        ->middleware('can:roles.create');
-
-    //visualizar el sitado
-    Route::get('roles','RoleController@index')->name('roles.index')
-        ->middleware('can:roles.index');
-    // ver el formulario de creacion
-    Route::get('roles/create','RoleController@create')->name('roles.create')
-        ->middleware('can:roles.create');
-    // actualizar
-    Route::put('roles/{role}','RoleController@update')->name('roles.update')
-        ->middleware('can:roles.edit');
-    //ver el detalle
-    Route::get('roles/{role}','RoleController@show')->name('roles.show')
-        ->middleware('can:roles.show');
-    // eliminar
-    Route::delete('roles/{role}','RoleController@destroy')->name('roles.destroy')
-        ->middleware('can:roles.destroy');
-    // ver el formulario de edicion
-    Route::get('roles/{role}/edit','RoleController@edit')->name('roles.edit')
-        ->middleware('can:roles.edit');
+    Route::resource('roles','RoleController');
 
     //PRODUCTOS
 
