@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Caffeinated\Shinobi\Models\Role;
-use Caffeinated\Shinobi\Models\Permissions;
+use Caffeinated\Shinobi\Models\Permission;
 
 use Illuminate\Http\Request;
 
@@ -18,14 +18,19 @@ class RoleController extends Controller
 
     public function create()
     {
-       return view('roles.create');
+        $permissions=Permission::get();
+
+        return view('roles.create',compact('permissions'));
     }
 
     public function store(Request $request)
     {
         $role = Role::create($request->all());
+
+        $role->permissions()->sync($request->get('permissions'));
+
         return redirect()->route('roles.edit',$role->id)
-            ->with('info','Producto guardado con exito');
+            ->with('info','Rol guardado con exito');
     }
     public function show(Role $role)
     {
@@ -35,20 +40,20 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        $roles=Role::get();
-        return view('roles.edit',compact('role','roles')); 
+        $permissions=Permission::get();
+        return view('roles.edit',compact('role','permissions')); 
     }
 
     public function update(Request $request, Role $role)
     {
-        //actualizar usuario
+        //actualizar Rol
         $role->update($request->all());
 
-        //Actualizar Roles
-        $role->roles()->sync($request->get('roles'));
+        //Actualizar Permisos
+        $role->permissions()->sync($request->get('permissions'));
 
         return redirect()->route('roles.edit',$role->id)
-            ->with('info','Usuario actualizado con exito');
+            ->with('info','Rol actualizado con exito');
     }
 
     public function destroy(Role $role)

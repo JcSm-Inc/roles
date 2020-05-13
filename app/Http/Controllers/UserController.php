@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Caffeinated\Shinobi\Models\Role;
-use Caffeinated\Shinobi\Models\Permissions;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -35,7 +34,7 @@ class UserController extends Controller
         $user->update($request->all());
 
         //Actualizar Roles
-        $user->users()->sync($request->get('roles'));
+        $user->roles()->sync($request->get('roles'));
 
         return redirect()->route('users.edit',$user->id)
             ->with('info','Usuario actualizado con exito');
